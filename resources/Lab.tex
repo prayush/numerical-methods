@@ -1,0 +1,114 @@
+\documentclass[prd,preprintnumbers,eqsecnum,floatfix,a4paper,nofootinbib]{revtex4}
+\usepackage{color}
+\usepackage{url}
+\usepackage{calc}
+\usepackage{amsmath,amssymb,graphicx}
+\usepackage{amssymb,amsmath}
+\usepackage{tensor}
+\usepackage{bm}
+\usepackage{times}
+\usepackage[varg]{txfonts}
+\usepackage[colorlinks, pdfborder={0 0 0}]{hyperref}
+\definecolor{LinkColor}{rgb}{0.75, 0, 0}
+\definecolor{CiteColor}{rgb}{0, 0.5, 0.5}
+\definecolor{UrlColor}{rgb}{0, 0, 0.75}
+\hypersetup{linkcolor=LinkColor}
+\hypersetup{citecolor=CiteColor}
+\hypersetup{urlcolor=UrlColor}
+\maxdeadcycles=1000
+\allowdisplaybreaks
+\newcommand{\comment}[1]{\textcolor{red}{\textit{#1}}}
+\newcommand{\checkthis}{\textcolor{magenta}{(CHECKTHIS)}}
+
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\boldeta}{\bm{\eta}}
+
+\begin{document}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\ber}{\begin{eqnarray}}
+\newcommand{\eer}{\end{eqnarray}}
+\def\bea{\begin{eqnarray}}
+\def\eea{\end{eqnarray}}
+\newcommand{\etal}{\emph{et al.}}
+
+\newcommand{\Sl}{S_\ell}
+\newcommand{\Sigmal}{\Sigma_\ell}
+\newcommand{\Flux}{\mathcal{F}}
+\newcommand{\LNh}{\hat{\mathbf{L}}_N}
+\newcommand{\LN}{\mathbf{L}_N}
+\newcommand{\bS}{\mathbf{S}}
+\newcommand{\bJ}{\mathbf{J}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\rmi}{\mathrm{i}}
+\newcommand{\flow}{f_\mathrm{low}}
+\newcommand{\fcut}{f_\mathrm{cut}}
+
+\newcommand{\bchi}{\bm{\chi}}
+\newcommand{\blambda}{\bm{\lambda}}
+\newcommand{\bLambda}{\bm{\Lambda}}
+\newcommand{\bchia}{\bm{\chi}_a}
+\newcommand{\bchis}{\bm{\chi}_s}
+\newcommand{\chis}{\chi_s}
+\newcommand{\chia}{\chi_a}
+\newcommand{\chiadL}{\bchia \cdot \LNh}
+\newcommand{\chisdL}{\bchis \cdot \LNh}
+\newcommand{\chisSqr}{\bchis^2}
+\newcommand{\chiaSqr}{\bchia^2}
+\newcommand{\chisDchia}{\bchis \cdot \bchia}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cP}{\mathcal{P}}
+
+
+\title{ICTS Graduate Course: Numerical Methods (PHY410.5)}
+\author{Parameswaran~Ajith}\email{ajith@icts.res.in}
+\author{Prayush~Kumar}\email{prayush@icts.res.in}
+\affiliation{International Centre for Theoretical Sciences, Tata Institute of Fundamental Research, Bangalore 560089, India.}
+\author{Alorika Kar (tutor)}\email{alorika.kar@icts.res.in}
+\affiliation{International Centre for Theoretical Sciences, Tata Institute of Fundamental Research, Bangalore 560089, India.}
+\bigskip
+\date{\today}
+\maketitle
+
+\section{Numerical differentiation}
+\input{diff.tex}
+
+\section{Numerical integration}
+\label{sec:integr}
+\input{integration.tex}
+
+\section{Ordinary differential equations: Initial value problems}
+\input{ode.tex}
+ 
+\section{Root finding}
+\input{root.tex}
+
+\section{Ordinary differential equations: Two-point boundary value problems}
+\input{ode_bvp.tex}
+  
+\section{Curve fitting}
+\label{sec:curve_fitting}
+\input{curve.tex}
+% 
+% \section{Spectral methods for ODEs and PDEs}
+% \input{PDE1.tex}
+% 
+\section{Statistical inference}
+\label{sec:statinf}
+\input{statinf.tex}
+% 
+\section{Monte-Carlo methods}
+\input{mc.tex}
+
+\section{Fourier and spectral methods}
+\input{fourier.tex}
+ 
+
+%\section{Lab 2}
+%\input{rest.tex}
+
+\bibliography{Lab}
+\end{document}

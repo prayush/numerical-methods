@@ -1,0 +1,94 @@
+
+\subsection{Gravitational waves from inspiralling compact binaries}
+
+The time evolution of the orbital phase $\varphi(t)$ of a binary of black holes evolving under the gravitational radiation reaction can be computed, in the post-Newtonian approximation, by solving the following coupled ODEs: 
+\begin{eqnarray}
+\frac{dv}{dt} = -\frac{\mathcal{F}(v)}{dE(v)/dv}, ~~~~~ \frac{d\varphi}{dt} = \frac{v^3}{m},
+\label{eq:phasing_formula}
+\end{eqnarray}
+where $E(v)$ is the binding energy of the orbit, $\mathcal{F}(v)$ is the energy flux of radiated gravitational waves, $m:= m_1 + m_2$ is the total mass of the binary, $v = (m \omega)^{1/3}$, $\omega$ being the orbital frequency. (Here we use geometric units, in which $G = c = 1$. This means that in all the expressions $m$ has to be replaced by $Gm/c^3$.)  
+
+The binding energy and gravitational-wave flux are given as post-Newtonian expansions in terms of the small parameter $v$ 
+\begin{eqnarray}
+E(v) = -\frac{1}{2} \mu v^2 \left[1 + \mathcal{O}(v^2) \right], ~~~ \mathcal{F}(v) = \frac{32}{5} \left(\frac{\mu}{m}\right)^2 \, v^{10} \left[1 + \mathcal{O}(v^2) \right], 
+\end{eqnarray}
+where $\mu :=  m_1 m_2/m$ is the reduced mass of the system. 
+
+\begin{enumerate}
+\item Compute $v$ as a function of $t$ by solving the first equation in Eq.~(\ref{eq:phasing_formula}) using Scipy's \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.RK45.html}{\texttt{integrate.RK45}} routine. This uses the adaptive Runge-Kutta method by Dormand \& Prince that is very similar to the Runge-Kutta-Fehlberg method that we learned in the class. Assume the following parameters: $m_1 = m_2 = 5 M_\odot$, $v_0 = 0.3$, $\varphi_0 = 0$. Plot $v(t)$. 
+\item Solve the coupled system in Eq.~(\ref{eq:phasing_formula}) to compute $v$ and $\varphi$. Compute and plot the two gravitational-wave polarizations: 
+\begin{equation}
+\label{eq:GWpolzn}
+h_+(t)  = 4 \frac{\mu}{m} v^2 \, \cos \varphi(t), ~~~ h_\times(t)  = 4 \frac{\mu}{m} v^2 \, \sin \varphi(t). 
+\end{equation}
+\end{enumerate}
+
+%
+\subsection{Structure of a relativistic, spherically symmetric star}
+\label{sec:TOV}
+%
+The interior structure of a relativistic, spherically symmetric star is described by a metric that has the line element 
+\begin{equation}
+ds^2 = - e^{2\Phi(r)} \, c^2 dt^2 + \left(1 - \frac{2Gm(r)}{rc^2} \right)^{-1} \, dr^2 + r^2 \, d\Omega^2,
+\end{equation}
+where $m(r)$ is called the \emph{mass function} (which encapsulates the {gravitational mass} inside the radius $r$), $e^{2\Phi(r)}$ is the \emph{lapse function} (which relates the proper time with the coordinate time). Outside the ``surface'' of the star (in vacuum), the spacetime is described by the Schwarzschild metric; the lapse function becomes 
+\begin{equation}
+\Phi(r) = \frac{1}{2} \ln \left(1 - \frac{2Gm_\star}{rc^2} \right)
+\label{eq:lapse_schwarz}
+\end{equation}
+where $m_\star$ is the total (gravitational) mass of the star. The structure can be computed by solving the following set of ordinary differential equations, derived by Tolman, Oppenheimer and Volkoff (TOV). 
+\begin{eqnarray}
+\frac{dm(r)}{dr} & = &{4 \pi} r^2 \rho(r), \label{eq:tov1} \\
+\frac{dP(r)}{dr} & = & -\frac{G (\rho + P(r)/c^2)}{r^2} \left[m(r) + \frac{4\pi r^3 P(r)}{c^2} \right] \left[1- \frac{2G m(r)}{c^2 r} \right]^{-1}, \label{eq:tov2} \\
+\frac{d\Phi(r)}{dr} & = & \frac{G m(r) + 4 \pi G r^3 P(r) / c^2}{c^2 r  [r - 2Gm(r)/c^2]}. \label{eq:tov3}
+\end{eqnarray}
+The TOV equations have to be supplemented by an \emph{equation of state} $P = P(\rho)$, that relates the pressure $P$ to the energy density $\rho$. We assume the equating of state to be of polytropic form
+\begin{equation}
+P(r) = K \, \rho(r) ^{\gamma}.
+\end{equation}
+We also need to specify initial conditions for the variables $m, P, \Phi$. The following conditions can be used 
+\begin{equation}
+\label{eq:tov_boundary}
+m ( r = 0) = 0, ~~~~ P(r = 0) = P_c = P(\rho_c), ~~~~ \Phi(r_\star) = \frac{1}{2} \ln \left(1 - \frac{2Gm_\star}{r_\star c^2} \right).  
+\end{equation}
+For the problems in this section, you may use Scipy's high-level interface to various ODE solvers \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html}{\texttt{solve\_ivp}}. 
+
+\subsubsection*{Problems:}
+\begin{enumerate}
+\item Compute the structure, i.e., $m(r)$ and $P(r)$,  of a neutron star with central density $\rho_c = 5 \times 10^{17} ~ \mathrm{kg/m^{3}}$ by solving Eqs.~(\ref{eq:tov1}) and (\ref{eq:tov2}). Assume a polytropic equation of state with $\gamma = 5/3$ and $K = 5380.3$ (SI units). What is the mass $m_\star$ and radius $r_\star$ of the neutron star?  (Useful tip: You will need to start the integration at $r = \Delta r$, where $\Delta r$ is a small number. You can assume $m(r = \Delta r) := 4/3 \, \pi \rho_c  (\Delta r)^3$).
+\item Compute the lapse function $e^{2\Phi(r)}$ by solving Eq.(\ref{eq:tov3}) starting from $r = r_\star$ to $r = 0$. On top of that, plot the lapse function for a Schwarzschild black hole (see Eq.\ref{eq:lapse_schwarz}) from $r = r_s$ to $r = 2 r_\star$, where $r_s \equiv 2 G m_\star/c^2$ is the Schwarzschild radius of the star. This exterior solution should match the interior solution at $r = r_\star$.  
+\end{enumerate}
+
+\subsection{Non-linear ordinary differential equations showing chaotic behavior: Lorenz equations}
+ The Lorenz equations were originally developed as a simplified mathematical model for atmospheric convection by Edward Lorenz. This was the first set of equations where deterministic chaos was observed. These coupled ordinary differential equations are 
+ \begin{eqnarray}
+ 	\frac{dx(t)}{dt} & = & \sigma [y(t)-x(t)], \nonumber \\
+ 	\frac{dy(t)}{dt} & = & x(t) [\rho - z(t)] - y(t), \nonumber \\
+ 	\frac{dz(t)}{dt} & = & x(t)y(t) - \beta z(t),
+ \end{eqnarray}
+ where $\rho, \sigma$ and $\beta$ are parameters of the system. 
+ \subsubsection{Problems:}
+ \begin{enumerate}
+ \item Solve the Lorenz system for $\rho = 28, \sigma = 10$ and $\beta = 8/3$ with the following initial conditions $x(t = 0) = y(t = 0) = z(t=0) = 1$. Plot $x(t)$, $y(t)$ and $z(t)$ for $t = 0 ... 100$. Is the solution deterministic or stochastic? 
+ \item Repeat the calculation with same parameters except for a tiny change in the initial condition for $x$: i.e., $x(t = 0) = 1 + 10^{-9}$. Plot  $x(t = 0) = y(t = 0) = z(t=0) = 1$ on top of the earlier estimate. Explain the result. 
+ \item Make a 3D plot of $x, y, z$. You should see the famous butterfly shaped structure now! 
+ \item Optional exercise: Make an animation of the above~\footnote{You can either use the matplotlib \href{http://matplotlib.org/api/animation_api.html}{animation} package or convert a number of PNG files to a gif animation using \href{http://www.imagemagick.org/Usage/anim_basics/}{ImageMagick}.}. 
+ \end{enumerate}
+ 
+% \subsection{Stochastic ordinary differential equations: Langevin equation}
+% 
+% The random motion of a particle in a fluid due to collisions with the molecules of the fluid, called the Brownian motion, is described by the Langevin equation: 
+% \begin{equation}
+% m \frac{d^2 \bx}{dt^2} = - \lambda \frac{d \bx}{dt} + \boldeta(t), 
+% \end{equation}
+% where $m$ is the mass of the particle, $\bx$ its position vector, $\lambda$ a damping coefficient, and $\boldeta(t)$ (called the \emph{noise term}) describes the stochastic forces (e.g., random collissions of molecules) affecting the particle. 
+% 
+% \subsubsection{Problems:}
+% \begin{enumerate}
+% \item Using the Euler-Maruyama method, compute the $1-d$ Brownian motion trajectories generated by the Langevin equation
+% ${d x}/{dt} = \eta(t)$,  
+% where $\eta(t)$ is Gaussian noise with zero mean and unit variance. Plot $x(t)$ for $ t \in [0, 100]$ assuming $x(t=0) = 0$. Is the solution deterministic or stochastic? 
+% \item Generalize the code so that it can deal with arbitrary number of particles. Plot $x(t)$ for 1000 particles on a single plot. Compute the average displacement $\bar{x}(t)$ of the particles (from $x(t=0)$) as a function of $t$ and plot it against $t$. What is the relation between  $\bar{x}(t)$ and $t$? 
+% \item Using the \href{http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.hist}{\texttt{hist}} function, plot the probability distribution $P(x)$ of $x(t)$ at $t = 10, 50, 100$.
+% \end{enumerate}
+% 

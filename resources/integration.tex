@@ -1,0 +1,41 @@
+\subsection{Newton–Cotes formulas}
+\label{sec:int_newton_cotes}
+
+We derived the following formulas for evaluating the following integral numerically: $I = \int_{x_1}^{x_2} f(x) \, dx.$
+\begin{eqnarray}
+\mathit{Midpoint~rule:} & I = h \, f(\frac{x_1+x_2}{2})  + \mathcal{O}\,(h^3) \\
+\mathit{Trapezoidal~rule:} & I = \frac{h}{2} \,\left[ f(x_1) + f(x_2) \right]  + \mathcal{O}\,(h^3) \\
+\mathit{Simpson's~1/3~rule:} & I = \frac{h}{3} \,\left[ f(x_0) + f(x_2) + 4 f(x_1) \right]  + \mathcal{O}\,(h^5), 
+\end{eqnarray}
+where $h := x_2 - x_1 = x_1 - x_0$ is the width of one slice. Note that the error estimates given above are the local errors. The global error is proportional to the local error $/~h$. 
+
+\subsubsection*{Problems:}
+\begin{enumerate}
+\item Show that Trapezoidal rule provides an estimate of the integral with local error $ \mathcal{O}\,(h^3)$. For this you can follow the steps similar to the ones that we used in the class to prove that the Midpoint rule has an error of $ \mathcal{O}\,(h^3)$.
+\item Show that Simpson's 1/3 rule provides an estimate of the integral with local error $ \mathcal{O}\,(h^5)$. 
+\item Compute the following integral numerically using the two explicit methods given above (Trapezoidal and Simpson's) %, as well as using Romberg's method: 
+\begin{equation}
+I = \int_{-1}^{1} e^{-x^2} dx.
+\end{equation}
+You may use the following SciPy functions: \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.trapezoid.html#scipy.integrate.trapezoid}{\texttt{scipy.integrate.trapezoid}} and \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simpson.html#scipy.integrate.simpson}{\texttt{scipy.integrate.simpson}}.
+\item Repeat the calculation using three different values of $h$. Plot the error $\Delta I$ against $h$. Show that the numerical estimates converge to the exact value according to the expected order of convergence. First, you can plot the error [which will be $\mathcal(O)(h^n)]$ against $h$ as a log-log plot and look at the slope. This will give you an idea of the order of convergence $n$. Then, you can actually compute $n$ using Eq.\eqref{eq:order_convg}.
+
+\item Using the Trapezoidal and Simpson's methods, compute the energy loss due to GW emission from binary black holes using the numerical-relativity data discussed in Sec.~\ref{sec:BBH_nr_data_fd}. The radiated energy can be computed from the GW polarizations as 
+\begin{equation}
+E = \int_{-\infty}^{\infty} \left[\left(\frac{dh_+}{dt}\right)^2 +  \left(\frac{dh_\times}{dt}\right)^2 \right] \, dt. 
+\end{equation}
+\item Repeat the calculation with three different values of $h$ (sampling rate $dt$ of the data). Compute the order of convergence [see, e.g., Eq.\eqref{eq:order_convg}].
+\end{enumerate}
+
+
+\subsection{Romberg method, Adaptive quadrature, Gaussian quadrature}
+
+\subsubsection*{Problems:}
+\begin{enumerate}
+\item Repeat problem 3 of Sec.\ref{sec:int_newton_cotes} using the adaptive Gaussian quadrature. You may use the function \href{https://docs.scipy.org/doc//scipy-1.13.0/reference/generated/scipy.integrate.quad.html#scipy.integrate.quad}{\texttt{scipy.integrate.quad}}.
+\item Repeat problem 5 of Sec.\ref{sec:int_newton_cotes} using the Romberg's method. You may use the function \href{https://docs.scipy.org/doc//scipy-1.13.0/reference/generated/scipy.integrate.romb.html#scipy.integrate.romb}{\texttt{scipy.integrate.romb}}.
+
+	
+
+\end{enumerate}
+

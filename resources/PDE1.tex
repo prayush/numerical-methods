@@ -1,0 +1,48 @@
+\subsection{Elliptic equations}
+
+We consider the example discussed in class, 
+
+\begin{equation}
+    \dfrac{d^2 u}{dx^2} - x^6(3+x^2)u = 0,
+\end{equation}
+
+on the interval $ [-1,1] $ with boundary conditions given by $ u(\pm 1) = 1 $.
+
+\subsubsection{Problems}
+
+\begin{enumerate}
+
+    \item Discretize this equation using Chebyshev polynomials. This will result in a set of equations for N unknowns, where two of the equations correspond to boundary conditions. Use direct matrix-inversion to find the solution.
+    \item Provide plots of the solution.
+    \item Solve for various different resolutions $N$, and provide plots that demonstrate how accurate your solution is, and that your numerical solution converges with $N$ (i.e. error goes to 0 as N increases).
+    \item How many modes are needed for an accuracy of $10^{-5}$? How many for $ 10^{-12} $?
+\end{enumerate}
+
+\subsection{Hyperbolic equations [Optional]}
+
+Consider the wave equation in 1+1 dimensions, as discussed in class, over the interval $ [0,2\pi] $,
+
+\begin{equation}
+    \Box g = -\partial_t ^2 g + \partial_x ^2 g = 0.
+\end{equation}
+
+This can be written as a set of first order differential equations,
+
+\begin{align*}
+    \dot{g} &= -\Pi, \\
+    \dot{\Pi} &= -\partial_x \Phi, \\
+    \dot{\Phi} &= -\partial_x \Pi.
+\end{align*}
+    
+\subsubsection{Problems}
+
+Solve the above equations using Fourier polynomial basis. Choose an initial condition which looks like a localized pulse. Enforce the scalar field to be 0 at both boundaries, i.e. set
+
+\begin{equation}
+    g(0) = \Pi(0) = \Phi(0) = g(2\pi) = \Pi(2\pi) = \Phi(2\pi) = 0.
+\end{equation}
+
+\begin{enumerate}
+    \item What do you observe if you evolve for times longer than $2\pi$?
+    \item Increase the domain size without changing the initial pulse size. Comment on the behaviour of the scalar in this case. 
+\end{enumerate}

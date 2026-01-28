@@ -1,0 +1,38 @@
+\subsection{Linear regression}
+
+We have seen in the class that, given a theoretical model $Y(x, \textbf{a}) = \sum_{j=1}^M a_j Y_j(x)$ and a data set $\{x_i, y_i\}$ with associated errors $\sigma_i$, we can estimate the parameters $\textbf{a}$ of the model by minimising the cost function (chi-square). This amounts to solving the following Normal equations of the least square problem 
+\begin{equation} 
+(\textsf{A}^T \textsf{A}) ~ \textbf{a} = \textsf{A}^T \textbf{b},
+\end{equation} 
+where the elements of the matrix $\textsf{A}$ and vector $\textbf{b}$ are given by 
+\begin{equation} 
+A_{ij} = \frac{Y_j(x_i)}{\sigma_i}, ~~~ b_i = \frac{y_i}{\sigma_i}. 
+\end{equation} 
+
+\subsubsection{Problems}
+
+\begin{enumerate}
+\item Show that the covariance matrix of the estimated parameters $\textbf{a}$ are given by $\textsf{C} = (\textsf{A}^T \textsf{A})^{-1}$
+
+\item The Hubble's law provides a relation between the luminosity distance $d_L$ and cosmological redshift $z$ that is valid in the local universe ($z \lesssim 0.1$). 
+\begin{equation} 
+d_L = \frac{c}{H_0} z, 
+\label{eq:Hubble_law}
+\end{equation} 
+where $c$ is the speed of light and $H_0$ is the Hubble constant. Here~\cite{sndata} you are given a dataset from the Supernova Cosmology project~\cite{SNCosmology}. This contains the redshift $z$, the distance modulus $\mu$, and the error on the distance modulus $\delta \mu$ measured from several Type 1a supernovae. The distance modulus is related to the luminosity distance (in parsecs) by $\mu = 5 \left(\log_{10} d_L - 1 \right)$. Use the linear regression method to fit the distance and redshift data to estimate the Hubble constant and the associated error. Note that the data contain redshifts above the range where the simple Hubble law is valid. Please select the samples with $z \leq 0.1$. 
+\end{enumerate}
+
+\subsection{Non-linear least square fitting}
+
+In the flat $\Lambda$CDM model of cosmology, the general relation between he luminosity distance $d_L$ and cosmological redshift $z$ is given by 
+\begin{equation} 
+d_L = (1+z) \frac{c}{H_0} \int_0^z \frac{dz'}{\sqrt{\Omega_M(1+z')^3 + \Omega_\Lambda)}}, 
+\label{eq:lcdm}
+\end{equation} 
+where $\Omega_M$ is the energy density of matter and $\Omega_\Lambda$ is the energy density of the cosmological constant. Since we are assuming spatially flat universe: $\Omega_M +\Omega_\Lambda = 1$. Thus the only free parameters of the model are $H_0$ and $\Omega_M$. 
+
+\subsubsection{Problems}
+
+\begin{enumerate}
+\item Use the supernova data from the entire redshift to estimate $H_0$ and $\Omega_M$ and the corresponding covariance. This is a non-linear least square problem. You can use SciPy's \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html}{\texttt{curve\_fit}} function. 
+\end{enumerate}

@@ -1,0 +1,24 @@
+
+The Kepler's equation is a  transcendental equation describing planetary motion:
+\begin{equation}
+M - E + e \sin E = 0. 
+\label{eq:keplers_eqn}
+\end{equation}
+This gives the the relation between the mean anomaly $M$ (a parametrisation of time) and the eccentric anomaly $E$ (parametrisation of the polar angle of the planet, given the orbital eccentricity $e$. The mean anomaly can be expressed in terms of the time coordinate $t$ as 
+\begin{equation}
+M = \frac{2\pi}{T} (t - \tau), 
+\label{eq:mean_anomaly}
+\end{equation}
+where $T$ is the period of the orbit and $\tau$ is the time when the planet reaches the periapsis. Combining this with the Kepler's equation, we can find $E$ as a function of $t$. The coordinates of the planet are then given by 
+\begin{equation}
+x = a  \, (\cos E - e), ~~~~~ y = b \, \sin E, 
+\end{equation}
+where $a$ and $b$ are the semi-major and semi-minor axes, respectively. 
+
+\subsubsection{Problems:}
+\begin{enumerate}
+\item Solve the Kepler's equation using the Newton-Raphson's method. Plot $E$ as a function of $M$ for three different values of $e = 0, 0.1, 0.5$. Take $M$ to be in the range $[0, 2 \pi)$. You can use scipy's \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root_scalar.html#scipy.optimize.root_scalar}{\texttt{optimize.root\_scalar}} function to find the roots. 
+\item Plot the orbits of solar system planets. The necessary data can be downloaded from the \href{https://nssdc.gsfc.nasa.gov/planetary/factsheet/}{NASA Planetary Fact Sheet}.  
+\item Optional exercise: Make an animation of the above. 
+\end{enumerate}
+

@@ -1,0 +1,29 @@
+Given some data $d$ and a model $\mathcal{M}$, Bayesian parameter estimation involves computing the posterior distribution of the parameters $\theta$ describing the model. Using Bayes theorem, we can write 
+\begin{equation}
+p(\theta | d, \mathcal{M}) = \frac{p(\theta | \mathcal{M}) ~ p(d | \theta , \mathcal{M})}{p(d | \mathcal{M})}, 
+\end{equation}
+where $p(\theta | \mathcal{M})$ is the prior distribution of the parameters $\theta$, $p(d | \theta , \mathcal{M})$ is the likelihood of data given the parameters $\theta$ and the model $\mathcal{M}$, while 
+\begin{equation}
+p(d | \mathcal{M}) = \int p(\theta | \mathcal{M}) ~ p(d | \theta , \mathcal{M}) \, d\theta
+\label{eq:evidence}
+\end{equation}
+is the evidence of the model $\mathcal{M}$. Bayesian model selection involves comparing the evidence of different models, say $\mathcal{M}_1$ and $\mathcal{M}_2$, by means of the likelihood ratio (Bayes factor) between the two models. 
+\begin{equation}
+\mathcal{B}^1_2 =  \frac{p(d | \mathcal{M}_1)}{p(d | \mathcal{M}_2)}. 
+\end{equation}
+
+\subsubsection{Problems}
+Here we solve the curve fitting problem presented in Sec.~\ref{sec:curve_fitting} using of Bayesian statistical inference. 
+
+\begin{enumerate}
+\item Compute the posterior distribution $p(H_0 | d, \mathcal{M}_1)$ of the Hubble constant $H_0$ using the Supernova Cosmology project data $z \leq 0.1$. Assume the Hubble's law [Eq.~\eqref{eq:Hubble_law}] as the model $\mathcal{M}_1$. Assume uniform prior for $H_0$ in the interval $(10, 100)$ km/s/Mpc. You can either use a Gaussian likelihood 
+%with $\sigma_{i} = 1$ or calculate the standard deviations (${\sigma_{i}}$) of $d_{L}$ from the data.  In any case, the likelihood of data is:   
+\begin{equation}
+p(d | H_0, \mathcal{M}_1) = \exp \left( - \sum_i \Big |\dfrac{d_i - d_L(z_i, \mathcal{M}_1)}{2\sigma_{i}^2} \Big |^2 \right), 
+\end{equation}
+where $d_i$ and $z_i$ are the samples of the luminosity distance and redshift from the data and $d_L(z_i, \mathcal{M}_1)$ is the relation between luminosity distance and redshift predicted by model $\mathcal{M}_1$ evaluated at redshift $z_i$. $\sigma_{i}$ is the standard deviation of the measurement in $d_L$ which can be calculated using the error in the distance modulus $\mu$ (given in the data file~\cite{sndata}). 
+\item Repeat the analysis using the full data set. What are the differences that you see in the posterior?
+\item Compute the posterior distribution  $p(H_0, \Omega_M | d, \mathcal{M}_2)$ of the Hubble constant $H_0$ and matter density $\Omega_M$ using the $\Lambda$CDM model $\mathcal{M}_2$ [Eq.~\eqref{eq:lcdm}]. You can compute the posterior on a 2-dimensional grid. Assume uniform priors for $H_0$ in the interval $(10, 100)$ km/s/Mpc and for $\Omega_M$ in the interval (0, 1). 
+\item Compute the likelihood ratio (Bayes factor) between the Hubble's law and $\Lambda$CDM model by computing the evidences [Eq.~\eqref{eq:evidence}] of the two models using a  numerical integration method that we learned in Sec.~\ref{sec:integr}. 
+
+\end{enumerate}

@@ -1,0 +1,17 @@
+\subsection{Fast Fourier transform (FFT)}
+\subsubsection{Problems:}
+\begin{enumerate}
+\item Prove the convolution theorem. 
+\item Prove the correlation theorem. 
+\item Compute the Fourier transform of the function $h(t) = \sin 2 \pi f_0 t$ where $f_0 = 10$ Hz, $t = [0, 30]$ seconds using numpy.fft. Use different window functions and compare the Fourier transforms obtained using different window functions.   
+\item Hercules X-1 is a high-mass X-ray binary (HMXB) system having a magnetized spinning neutron star which happens to be an X-ray pulsar. Here~\cite{rxte-data} you are given the data of an RXTE~\cite{rxte} observation after cleaning and pre-processing. The file contains two columns, (i) time (in seconds) and (ii) count-rate of X-ray photons (i.e., number of photons detected per unit time). Plot the count-rate as function of time. This is called lightcurve in X-ray astronomy. Compute the FFT of the given time-series and plot its absolute value against the frequency. Are you able to find any periodic signal(s)? The lowest frequency signal corresponds to the spin frequency of the neutron star.  What is the spin period of this pulsar? Can you identify other periodic signals and how they are related to the lowest frequency signal?~\footnote{This problem and data are graciously provided by Dr. Arunava Mukherjee (SINP).}
+\end{enumerate}
+
+\subsection{Power spectrum estimation using FFT}
+\subsubsection{Problems:}
+\begin{enumerate}
+\item A sample data set from the LIGO gravitational-wave observatory can be downloaded from here~\cite{ligo-data}. This contains 256 seconds of LIGO data from 2005, sampled at a rate of 4096 Hz. Compute the power spectral density of the data using Welch's modified periodogram method. 
+\end{enumerate}
+
+
+
