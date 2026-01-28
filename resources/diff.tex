@@ -1,4 +1,4 @@
-\subsection{Finite differencing, convergence, error estimates}
+\subsubsection{Finite differencing, convergence, error estimates}
 
 We derived the following finite-differencing approximants for the derivative of a function $f(x)$: 
 \begin{eqnarray}
@@ -7,7 +7,8 @@ We derived the following finite-differencing approximants for the derivative of 
 \mathit{Central~differencing:} & f'(x) \simeq \frac{f(x+h)-f(x-h)}{2h} + \mathcal{O}\,(h^2)
 \end{eqnarray}
 
-\subsubsection*{Problems:}
+
+\textbf{Problems:}
 \begin{enumerate}
 \item Write a Python function to compute derivatives using these three finite differencing methods. Compute the derivative of the function $f(x) = e^x \, \sin(x)$ over the range $x = [0, 2\pi)$. Plot the numerically computed derivative $f_{(h)}'(x)$ for three different values of $h$. 
 \item Plot the error $\Delta f_{h}'(x) := |f_{h}'(x) - f'(x)|$ for three different values of $h$, and estimate the order of convergence $n$ of each finite-difference approximation. Plot $n(x)$, where 
@@ -20,7 +21,7 @@ n(x) = \log_2 \frac{f'_{4h}(x) - f'_{2h}(x)}{f'_{2h}(x) - f'_{h}(x)}
 %\item Derive a central differencing approximant for the first derivative $f'(x)$ that is accurate to $\mathcal{O}(h^4)$. 
 \end{enumerate}
 
-\subsection{Richardson extrapolation}
+\subsubsection{Richardson extrapolation}
 
 We have seen that, if the order of the error in the numerical estimate of a function $f(x)$ is known, Richardson extrapolation provides a powerful way of improving the accuracy of the estimate. If we have two numerical estimates $f_{h}(x)$ and $f_{2h}(x)$ each having an error of $\mathcal{O}\,(h^k)$, a better estimate is given by 
 \begin{equation}
@@ -28,7 +29,8 @@ f(x) \simeq \frac{2 ~ 2^k\, f_{h}(x) - f_{2h}(x)}{2\,2^k -1 } + \mathcal{O}\,(h^
 \end{equation}
 where $l$ is the next-to-leading-order error term (for e.g., $l = k+2$ for central differencing, while $l = k+1$ for forward/backward differencing). 
 
-\subsubsection*{Problems:}
+
+\textbf{Problems:}
 \label{sec:BBH_nr_data_fd}
 \begin{enumerate}
 \item Gravitational-waves (GWs) have two independent polarization states -- called ``plus'' and ``cross'' states. GW signals from the coalescence of black-hole binaries, in the simplest case, are circularly polarized: 
