@@ -11,7 +11,7 @@ Consider the domain $x \in [-1, 1]$, representing a normalized frequency range a
     \item You should observe wild oscillations near the boundaries (the Runge phenomenon). Calculate the maximum error $\epsilon_{max} = \max |L(x) - P_{N-1}(x)|$.
     \item Repeat the interpolation using **Chebyshev nodes**, defined as $x_k = \cos\left(\frac{2k-1}{2N}\pi\right)$ for $k=1,\dots,N$. Plot the result and compare the maximum error.
     \item Finally, use a **Cubic Spline** on the original 11 equidistant nodes.
-    \item \textit{Physics discussion:} If you were trying to measure the "equivalent width" (area under the curve) of this spectral line, which interpolation method would introduce significant unphysical artifacts, and why?
+    \item \textit{Discussion:} If you were trying to measure the "equivalent width" (area under the curve) of this spectral line, which interpolation method would introduce significant unphysical artifacts, and why?
 \end{enumerate}
 
 \vspace{0.5cm}
@@ -25,10 +25,25 @@ $$ c_s^2 = \frac{dP}{d\rho} $$
     \item Generate a synthetic "EOS table" using the polytropic relation $P(\rho) = K \rho^{5/3}$ (modeling a non-relativistic degenerate Fermi gas). Create a dataset of 10 points logarithmically spaced between $\rho = 10^4$ and $\rho = 10^7$.
     \item \textbf{Linear Interpolation:} Interpolate $P(\rho)$ linearly between the points. numerically compute the derivative $dP/d\rho$ (the sound speed squared) from this interpolant on a fine grid. Plot $c_s^2$ vs $\rho$.
     \item \textbf{Cubic Spline:} Interpolate the same data using a Cubic Spline and compute the derivative of the spline. Plot this $c_s^2$ on the same graph.
-    \item \textit{Analysis:} What physical violation occurs in the sound speed when using linear interpolation? Why is the Cubic Spline preferred for thermodynamic tables used in hydrodynamics codes?
+    \item \textit{Discussion:} What physical violation occurs in the sound speed when using linear interpolation? Why is the Cubic Spline preferred for thermodynamic tables used in hydrodynamics codes?
 \end{enumerate}
 
 \vspace{0.5cm}
+
+\subsection{Non-Parametric Inference with Gaussian Processes (Reconstructing the Universe)}
+
+In modern data-driven physics (e.g., reconstructing the history of Dark Energy from Supernovae), we often need to interpolate functions where the data is noisy and we do not have a trusted physical theory to define the functional form. Gaussian Process (GP) Regression is the standard tool for this.
+
+\begin{enumerate}
+    \item \textbf{Synthetic Data:} Generate a dataset representing a "mystery physical signal" $f(x) = \sin(x) + 0.5 x$ on the interval $x \in [0, 10]$. Select 15 random points and add Gaussian noise with $\sigma = 0.3$.
+    \item \textbf{The Kernel:} Perform a GP regression using a **Squared Exponential (RBF) kernel**:
+    $$ k(x, x') = \sigma_f^2 \exp\left( -\frac{(x-x')^2}{2\ell^2} \right) $$
+    You can use \texttt{scikit-learn} or implement the covariance matrix operations directly.
+    \item \textbf{Uncertainty Quantification:} Plot the interpolated mean function and the $95\%$ confidence region (shaded band).
+    \item \textbf{Extrapolation:} Extend the prediction domain to $x \in [0, 15]$.
+    \item \textit{Discussion:} Compare the behavior of the GP error bars in the extrapolation region ($x > 10$) to what you would get from a high-order polynomial fit. Which method "knows" that it is ignorant?
+\end{enumerate}
+
 
 \subsection{"Infinite" Precision via Richardson Extrapolation (Romberg Integration)}
 
@@ -40,5 +55,6 @@ $$ T = 4 \int_{0}^{\pi/2} \frac{d\phi}{\sqrt{1 - k^2 \sin^2\phi}}, \quad \text{w
     \item The error in the Trapezoidal rule scales as $O(h^2)$. Use **Richardson Extrapolation** to combine $T(h_1)$ and $T(h_2)$ to produce a new estimate $T_{extrap}$ that cancels the leading order error term.
     $$ T_{extrap} \approx \frac{4T(h/2) - T(h)}{3} $$
     \item Compare the error of $T(h_1)$, $T(h_2)$, and $T_{extrap}$ against the "true" value (computed using `scipy.special.ellipk` or a very high-resolution integration).
-    \item \textit{Concept Check:} Why is this method (often called Romberg Integration when repeated) computationally cheaper than simply running the Trapezoidal rule with $N=10^6$ points?
+    \item \textit{Discussion:} Why is this method (often called Romberg Integration when repeated) computationally cheaper than simply running the Trapezoidal rule with $N=10^6$ points?
 \end{enumerate}
+
