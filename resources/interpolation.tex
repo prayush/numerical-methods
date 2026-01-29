@@ -1,0 +1,44 @@
+\section{Interpolation and Extrapolation Techniques}\label{sec:interpolation}
+
+\subsection{The Runge Phenomenon in Spectroscopy (Polynomial vs. Rational/Spline Interpolation)}
+
+In experimental spectroscopy, one often measures the intensity of a spectral line at discrete wavelength intervals. A typical absorption line shape is modeled by a Lorentzian (Cauchy) distribution:
+$$ L(x) = \frac{1}{1 + 25x^2} $$
+Consider the domain $x \in [-1, 1]$, representing a normalized frequency range around the line center.
+
+\begin{enumerate}
+    \item Sample this function at $N=11$ equidistant points (nodes) in the interval $[-1, 1]$. Perform a global polynomial interpolation of degree $N-1$ (Lagrange interpolation). Plot the original function and your interpolant on a fine grid.
+    \item You should observe wild oscillations near the boundaries (the Runge phenomenon). Calculate the maximum error $\epsilon_{max} = \max |L(x) - P_{N-1}(x)|$.
+    \item Repeat the interpolation using **Chebyshev nodes**, defined as $x_k = \cos\left(\frac{2k-1}{2N}\pi\right)$ for $k=1,\dots,N$. Plot the result and compare the maximum error.
+    \item Finally, use a **Cubic Spline** on the original 11 equidistant nodes.
+    \item \textit{Physics discussion:} If you were trying to measure the "equivalent width" (area under the curve) of this spectral line, which interpolation method would introduce significant unphysical artifacts, and why?
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\subsection{Thermodynamics of Stellar Interiors (Derivatives of Interpolants)}
+
+In stellar structure simulations (e.g., White Dwarfs or Neutron Stars), the Equation of State (EOS) is often provided as a pre-computed table of Pressure ($P$) vs. Density ($\rho$). However, hydrodynamic stability calculations require the adiabatic sound speed, defined as:
+$$ c_s^2 = \frac{dP}{d\rho} $$
+
+\begin{enumerate}
+    \item Generate a synthetic "EOS table" using the polytropic relation $P(\rho) = K \rho^{5/3}$ (modeling a non-relativistic degenerate Fermi gas). Create a dataset of 10 points logarithmically spaced between $\rho = 10^4$ and $\rho = 10^7$.
+    \item \textbf{Linear Interpolation:} Interpolate $P(\rho)$ linearly between the points. numerically compute the derivative $dP/d\rho$ (the sound speed squared) from this interpolant on a fine grid. Plot $c_s^2$ vs $\rho$.
+    \item \textbf{Cubic Spline:} Interpolate the same data using a Cubic Spline and compute the derivative of the spline. Plot this $c_s^2$ on the same graph.
+    \item \textit{Analysis:} What physical violation occurs in the sound speed when using linear interpolation? Why is the Cubic Spline preferred for thermodynamic tables used in hydrodynamics codes?
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\subsection{"Infinite" Precision via Richardson Extrapolation (Romberg Integration)}
+
+We often cannot perform calculations at the continuum limit ($h \to 0$), but we can extrapolate to it. Consider the period $T$ of a simple pendulum with length $L=1$ and $g=1$, released from a large amplitude $\theta_0 = 0.95\pi$ (very close to the top). The period is given by the elliptic integral:
+$$ T = 4 \int_{0}^{\pi/2} \frac{d\phi}{\sqrt{1 - k^2 \sin^2\phi}}, \quad \text{where } k = \sin(\theta_0/2) $$
+
+\begin{enumerate}
+    \item Write a function to compute this integral using the **Trapezoidal Rule** with a step size $h$. Calculate the period $T(h)$ for a coarse grid $N=8$ intervals ($h_1 = \pi/16$) and a finer grid $N=16$ intervals ($h_2 = \pi/32$).
+    \item The error in the Trapezoidal rule scales as $O(h^2)$. Use **Richardson Extrapolation** to combine $T(h_1)$ and $T(h_2)$ to produce a new estimate $T_{extrap}$ that cancels the leading order error term.
+    $$ T_{extrap} \approx \frac{4T(h/2) - T(h)}{3} $$
+    \item Compare the error of $T(h_1)$, $T(h_2)$, and $T_{extrap}$ against the "true" value (computed using `scipy.special.ellipk` or a very high-resolution integration).
+    \item \textit{Concept Check:} Why is this method (often called Romberg Integration when repeated) computationally cheaper than simply running the Trapezoidal rule with $N=10^6$ points?
+\end{enumerate}
