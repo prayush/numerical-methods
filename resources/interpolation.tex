@@ -45,21 +45,3 @@ In modern data-driven physics (e.g., reconstructing the history of Dark Energy f
 \end{enumerate}
 
 
-\subsection{Richardson Extrapolation and the ``Spectral'' Trap}
-
-The period $T$ of a simple pendulum is traditionally calculated by integrating from the equilibrium position ($\theta=0$) to the turning point ($\theta=\theta_0$). In the standard transformation $\sin(\theta/2) = k \sin\phi$, where $k = \sin(\theta_0/2)$, this corresponds to the interval $\phi \in [0, \pi/2]$.
-
-However, at the turning point ($\phi = \pi/2$), the pendulum's angular velocity is zero. Mathematically, this causes all odd-order derivatives of the integrand to vanish at the boundary. This leads to the phenomenon of \textbf{spectral accuracy}, where the Trapezoidal rule converges exponentially fast, rendering Richardson Extrapolation redundant.
-
-To observe Richardson Extrapolation in action, we must ``break'' this symmetry. We will calculate the \textbf{time of flight} $t_{partial}$ for the pendulum to travel from the bottom to an intermediate angle $\theta_{p}$ corresponding to $\phi = \pi/3$. At this point, the pendulum is still in motion, the derivatives at the boundary are non-zero, and the standard $O(h^2)$ error terms reappear.
-
-Consider the partial time integral for a pendulum with length $L=1$ and $g=1$, released from $\theta_0 = 0.95\pi$:
-$$ t_{partial} = 4 \int_{0}^{\pi/3} \frac{d\phi}{\sqrt{1 - k^2 \sin^2\phi}}, \quad k = \sin\left(\frac{\theta_0}{2}\right) $$
-
-\begin{enumerate}
-    \item \textbf{Trapezoidal Integration}: Write a Python function to compute $t_{partial}$ using the Trapezoidal Rule. Calculate estimates for $N_1=8$ and $N_2=16$ intervals.
-    \item \textbf{Extrapolation}: Apply Richardson Extrapolation to cancel the leading-order error:
-    $$ t_{extrap} = \frac{4 \cdot t(h/2) - t(h)}{3} $$
-    \item \textbf{Validation}: Compare your results against the ``true'' value using the Incomplete Elliptic Integral of the First Kind: $4 \times \texttt{scipy.special.ellipkinc}(\pi/3, k^2)$.
-\end{enumerate}
-
