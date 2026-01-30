@@ -43,6 +43,5 @@ h_+(t) & = A(t) \, \cos \varphi(t), ~~~ h_\times(t) & = A(t) \, \sin \varphi(t).
 Download the data file~\cite{nrdata} containing $h_+(t)$ and $h_\times(t)$. (This is the reduced form of the data produced by a numerical-relativity simulation of black-hole binaries performed by the SXS collaboration and is publicly available at~\cite{SXScatalog}). Compute the phase evolution $\varphi(t)$, the frequency evolution $\omega(t) := d\varphi(t)/dt$ and the rate of change of frequency $\dot{\omega}(t) := d\omega(t)/dt$ using second-order central difference approximation. 
 \item Estimate the order of convergence of the numerical computation of $\omega(t)$ and $\dot{\omega}(t)$. 
 \item Perform an extrapolation of $\omega(t)$ and $\dot{\omega}(t)$ to the next order using estimates of two different time-resolutions.  
-\item Derive an explicit expression for $f'(x)$ with error $\mathcal{O}(h^4)$ using Richardson extrapolation. This is the fourth-order finite differencing approximant for the derivative, which we will use later. 
-
+\item Derive an explicit expression for $f'(x)$ with error $\mathcal{O}(h^4)$ using Richardson extrapolation. This is the fourth-order finite differencing approximant for the derivative. 
 \end{enumerate}
