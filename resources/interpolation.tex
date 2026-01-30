@@ -45,16 +45,21 @@ In modern data-driven physics (e.g., reconstructing the history of Dark Energy f
 \end{enumerate}
 
 
-\subsection{"Infinite" Precision via Richardson Extrapolation (Romberg Integration)}
+\subsection{Richardson Extrapolation and the ``Spectral'' Trap}
 
-We often cannot perform calculations at the continuum limit ($h \to 0$), but we can extrapolate to it. Consider the period $T$ of a simple pendulum with length $L=1$ and $g=1$, released from a large amplitude $\theta_0 = 0.95\pi$ (very close to the top). The period is given by the elliptic integral:
-$$ T = 4 \int_{0}^{\pi/2} \frac{d\phi}{\sqrt{1 - k^2 \sin^2\phi}}, \quad \text{where } k = \sin(\theta_0/2) $$
+The period $T$ of a simple pendulum is traditionally calculated by integrating from the equilibrium position ($\theta=0$) to the turning point ($\theta=\theta_0$). In the standard transformation $\sin(\theta/2) = k \sin\phi$, where $k = \sin(\theta_0/2)$, this corresponds to the interval $\phi \in [0, \pi/2]$.
+
+However, at the turning point ($\phi = \pi/2$), the pendulum's angular velocity is zero. Mathematically, this causes all odd-order derivatives of the integrand to vanish at the boundary. This leads to the phenomenon of \textbf{spectral accuracy}, where the Trapezoidal rule converges exponentially fast, rendering Richardson Extrapolation redundant.
+
+To observe Richardson Extrapolation in action, we must ``break'' this symmetry. We will calculate the \textbf{time of flight} $t_{partial}$ for the pendulum to travel from the bottom to an intermediate angle $\theta_{p}$ corresponding to $\phi = \pi/3$. At this point, the pendulum is still in motion, the derivatives at the boundary are non-zero, and the standard $O(h^2)$ error terms reappear.
+
+Consider the partial time integral for a pendulum with length $L=1$ and $g=1$, released from $\theta_0 = 0.95\pi$:
+$$ t_{partial} = 4 \int_{0}^{\pi/3} \frac{d\phi}{\sqrt{1 - k^2 \sin^2\phi}}, \quad k = \sin\left(\frac{\theta_0}{2}\right) $$
 
 \begin{enumerate}
-    \item Write a function to compute this integral using the **Trapezoidal Rule** with a step size $h$. Calculate the period $T(h)$ for a coarse grid $N=8$ intervals ($h_1 = \pi/16$) and a finer grid $N=16$ intervals ($h_2 = \pi/32$).
-    \item The error in the Trapezoidal rule scales as $O(h^2)$. Use **Richardson Extrapolation** to combine $T(h_1)$ and $T(h_2)$ to produce a new estimate $T_{extrap}$ that cancels the leading order error term.
-    $$ T_{extrap} \approx \frac{4T(h/2) - T(h)}{3} $$
-    \item Compare the error of $T(h_1)$, $T(h_2)$, and $T_{extrap}$ against the "true" value (computed using `scipy.special.ellipk` or a very high-resolution integration).
-    \item \textit{Discussion:} Why is this method (often called Romberg Integration when repeated) computationally cheaper than simply running the Trapezoidal rule with $N=10^6$ points?
+    \item \textbf{Trapezoidal Integration}: Write a Python function to compute $t_{partial}$ using the Trapezoidal Rule. Calculate estimates for $N_1=8$ and $N_2=16$ intervals.
+    \item \textbf{Extrapolation}: Apply Richardson Extrapolation to cancel the leading-order error:
+    $$ t_{extrap} = \frac{4 \cdot t(h/2) - t(h)}{3} $$
+    \item \textbf{Validation}: Compare your results against the ``true'' value using the Incomplete Elliptic Integral of the First Kind: $4 \times \texttt{scipy.special.ellipkinc}(\pi/3, k^2)$.
 \end{enumerate}
 
