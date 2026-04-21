@@ -7482,7 +7482,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Monte-Carlo-Methods,-MCMC,-and-Modern-Statistical-Inference">Monte Carlo Methods, MCMC, and Modern Statistical Inference<a class="anchor-link" href="#Monte-Carlo-Methods,-MCMC,-and-Modern-Statistical-Inference">¶</a></h1>
+<h1 id="Modern-Statistical-Inference">Modern Statistical Inference<a class="anchor-link" href="#Modern-Statistical-Inference">¶</a></h1>
 </div>
 </div>
 </div>
@@ -7493,7 +7493,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="1.-Introduction-to-Standard-Monte-Carlo-Methods">1. Introduction to Standard Monte Carlo Methods<a class="anchor-link" href="#1.-Introduction-to-Standard-Monte-Carlo-Methods">¶</a></h2><h3 id="1.1-The-Core-Problem:-Intractable-Integrals">1.1 The Core Problem: Intractable Integrals<a class="anchor-link" href="#1.1-The-Core-Problem:-Intractable-Integrals">¶</a></h3><p>In mathematics, physics, and statistics, we frequently encounter the need to evaluate expectations or integrals of the form:</p>
+<h2 id="1.-Standard-Monte-Carlo-Methods">1. Standard Monte Carlo Methods<a class="anchor-link" href="#1.-Standard-Monte-Carlo-Methods">¶</a></h2><h3 id="1.1-The-Core-Problem:-Intractable-Integrals">1.1 The Core Problem: Intractable Integrals<a class="anchor-link" href="#1.1-The-Core-Problem:-Intractable-Integrals">¶</a></h3><p>In mathematics, physics, and statistics, we frequently encounter the need to evaluate expectations or integrals of the form:</p>
 $$I = \mathbb{E}_p[f(X)] = \int_{\mathcal{X}} f(x) p(x) dx$$<p>where $p(x)$ is a probability density function on a potentially high-dimensional space $\mathcal{X}$, and $f(x)$ is some function of interest.</p>
 <p>When $\mathcal{X}$ is high-dimensional (e.g., $d &gt; 4$), standard deterministic numerical integration techniques (like the Trapezoidal rule or Simpson's rule) suffer from the curse of dimensionality. Their error scales as $\mathcal{O}(N^{-c/d})$, making them computationally infeasible.</p>
 <p><strong>Deterministic Error Scaling:</strong></p>
@@ -7517,7 +7517,7 @@ $$\lim_{N \to \infty} P(|\hat{I}_N - I| \geq \epsilon) \leq \lim_{N \to \infty} 
 <p><strong>Error Analysis (Central Limit Theorem)</strong>:
 To understand how quickly this convergence happens and to quantify our uncertainty, we turn to the Central Limit Theorem (CLT). First, let's define the variance of a single function evaluation under our probability density as $\sigma^2 = \text{Var}_p(f(X)) = \int (f(x) - I)^2 p(x) dx$.</p>
 <p>Because our samples $x_1, \dots, x_N$ are independently drawn, the variance of their sum is simply the sum of their individual variances. The variance of our overall estimator $\hat{I}_N$ is thus:</p>
-$$\text{Var}(\hat{I}_N) = \text{Var}\left( \frac{1}{N} \sum_{i=1}^N f(x_i) \right) = \frac{1}{N^2} \sum_{i=1}^N \text{Var}(f(x_i)) = \frac{1}{N^2} (N \cdot \sigma^2) = \frac{\sigma^2}{N}$$<p>By the Central Limit Theorem, the distribution of the estimation errors becomes Gaussian as $N$ becomes large. Specifically, the standardized error converges in distribution ($\xrightarrow{d}$) to a standard normal distribution:</p>
+$$\text{Var}(\hat{I}_N) = \text{Var}\left( \frac{1}{N} \sum_{i=1}^N f(x_i) \right) = \left(\frac{1}{N}\right)^2 \sum_{i=1}^N \text{Var}(f(x_i)) = \frac{1}{N^2} (N \cdot \sigma^2) = \frac{\sigma^2}{N}$$<p>By the Central Limit Theorem, the distribution of the estimation errors becomes Gaussian as $N$ becomes large. Specifically, the standardized error converges in distribution ($\xrightarrow{d}$) to a standard normal distribution:</p>
 $$\frac{\hat{I}_N - I}{\sigma / \sqrt{N}} \xrightarrow{d} \mathcal{N}(0, 1)$$<p>This is incredibly powerful because it allows us to construct standard confidence intervals (e.g., a 95% confidence interval is approximately $\hat{I}_N \pm 1.96 \frac{\sigma}{\sqrt{N}}$). Therefore, the standard error of the MC estimate shrinks at a rate of $\frac{\sigma}{\sqrt{N}}$. Remarkably, <strong>this error rate of $\mathcal{O}(N^{-1/2})$ is entirely independent of the spatial dimension $d$.</strong></p>
 <h3 id="1.3-When-to-use-Standard-Monte-Carlo:">1.3 When to use Standard Monte Carlo:<a class="anchor-link" href="#1.3-When-to-use-Standard-Monte-Carlo:">¶</a></h3><ul>
 <li><p><strong>High-Dimensional Integration</strong>: Whenever you are evaluating integrals or expectations in spaces where $d &gt; 4$, as the curse of dimensionality makes deterministic grid-based methods utterly fail.</p>
@@ -7525,49 +7525,6 @@ $$\frac{\hat{I}_N - I}{\sigma / \sqrt{N}} \xrightarrow{d} \mathcal{N}(0, 1)$$<p>
 <li><p><strong>Physical Simulations</strong>: When modeling highly complex systems with many interacting components (e.g., lattice QCD in particle physics or rendering equations in computer graphics).</p>
 </li>
 <li><p><strong>Strict Prerequisite</strong>: You must have a mechanism to directly and cheaply draw independent, identically distributed (i.i.d.) samples from the target probability distribution $p(x)$.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a3886993">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="2.-Statistical-Inference:-Foundations">2. Statistical Inference: Foundations<a class="anchor-link" href="#2.-Statistical-Inference:-Foundations">¶</a></h2><p>Before diving into the mechanics of advanced sampling, we must establish what we are trying to achieve with these samples.</p>
-<h3 id="2.1-What-is-Inference-and-Why-is-it-Needed-in-Physics?">2.1 What is Inference and Why is it Needed in Physics?<a class="anchor-link" href="#2.1-What-is-Inference-and-Why-is-it-Needed-in-Physics?">¶</a></h3><p>Statistical inference is the process of using data analysis to deduce properties of an underlying probability distribution or physical reality. While probability theory tells us how to generate data from a known model (the forward problem), inference allows us to take observed data and work backward to determine the true nature of the model generating it (the inverse problem).</p>
-<p>In physics, inference is absolutely essential. Physical theories (like the Standard Model, thermodynamics, or General Relativity) provide mathematical frameworks governed by specific parameters (e.g., the mass of the Higgs boson, decay rates, or the Hubble constant). However, experiments and observations yield noisy, finite data. Inference acts as the mathematical bridge between theoretical physics and experimental data. It allows us to:</p>
-<ul>
-<li><p><strong>Estimate Parameters</strong>: Delineate the true values of fundamental constants from noisy sensor readings.</p>
-</li>
-<li><p><strong>Quantify Uncertainty</strong>: Rigorously calculate the error margins of those measurements, knowing that sensors and environments inherently introduce noise.</p>
-</li>
-<li><p><strong>Hypothesis Testing</strong>: Test competing physical models against one another based on empirical evidence (e.g., does the data support a new particle, or is it just background noise?).</p>
-</li>
-</ul>
-<h3 id="2.2-Frequentist-vs.-Bayesian-Paradigms">2.2 Frequentist vs. Bayesian Paradigms<a class="anchor-link" href="#2.2-Frequentist-vs.-Bayesian-Paradigms">¶</a></h3><p>Historically, there are two dominant paradigms for performing statistical inference, which differ fundamentally in their philosophical definition of probability.</p>
-<h4 id="1.-Frequentist-Inference:">1. Frequentist Inference:<a class="anchor-link" href="#1.-Frequentist-Inference:">¶</a></h4><ul>
-<li><p><strong>Definition of Probability</strong>: Probability is defined strictly as the long-run frequency of repeatable events (e.g., the ratio of "heads" if we flip a coin infinitely many times).</p>
-</li>
-<li><p><strong>Parameters vs. Data</strong>: The true parameters of a physical system ($\theta$) are treated as fixed, but unknown constants. The observed data ($D$) is treated as a random variable.</p>
-</li>
-<li><p><strong>Methodology</strong>: Frequentists rely heavily on the Likelihood function $\mathcal{L}(\theta) = p(D|\theta)$—the probability of observing the data given a specific parameter value. They use techniques like Maximum Likelihood Estimation (MLE) to find the parameter that makes the observed data most mathematically probable. Mathematically, the MLE is the parameter value $\hat{\theta}_{MLE}$ that maximizes this likelihood:</p>
-$$\hat{\theta}_{MLE} = \arg\max_\theta \mathcal{L}(\theta)$$<p>Because observations are often assumed to be independent, the joint probability is a product of individual probabilities. To avoid computational underflow with tiny numbers, it is standard practice to instead maximize the sum of the log-likelihoods: $\hat{\theta}_{MLE} = \arg\max_\theta \sum_{i} \log p(x_i | \theta)$.</p>
-</li>
-<li><p><strong>Uncertainty</strong>: Uncertainty is expressed via confidence intervals. A 95% confidence interval means: "If we repeated this exact experiment 100 times, 95 of the calculated intervals would contain the true, fixed parameter." It does not mean there is a 95% chance the parameter is in the specific interval we just calculated. This is a subtle but critical distinction. Because the frequentist paradigm dictates that the true parameter is a fixed constant, it does not have a probability distribution. Therefore, once an interval is computed from a specific dataset (e.g., $[2.4, 3.8]$), the true parameter is either exactly 100% inside that interval, or exactly 0% inside it. The "95%" describes the long-run reliability of the procedure used to generate the intervals, not the probability of the parameter residing in any one single realized interval.</p>
-</li>
-</ul>
-<h4 id="2.-Bayesian-Inference:">2. Bayesian Inference:<a class="anchor-link" href="#2.-Bayesian-Inference:">¶</a></h4><ul>
-<li><p><strong>Definition of Probability</strong>: Probability represents a "degree of belief" or a state of knowledge about an event or parameter, which can be dynamically updated as new evidence is acquired.</p>
-</li>
-<li><p><strong>Parameters vs. Data</strong>: The observed data ($D$) is treated as fixed (since we have already measured it). The true parameters ($\theta$) are treated as random variables with their own probability distributions, reflecting our uncertainty about them.</p>
-</li>
-<li><p><strong>Methodology</strong>: Bayesians explicitly incorporate prior knowledge (the Prior) and update it using the incoming data (the Likelihood) to form a new, comprehensive belief state (the Posterior) via Bayes' Theorem.</p>
-</li>
-<li><p><strong>Uncertainty</strong>: Uncertainty is expressed via credible intervals. A 95% credible interval directly means: "<strong>Given the data and our prior knowledge, there is a 95% probability that the true parameter lies within this specific range</strong>." This intuitive interpretation is usually exactly what scientists want to know, but achieving it requires solving complex integrals—which brings us back to Monte Carlo methods. <em>How do we find them</em>? Unlike the rigid procedures of frequentist confidence intervals, finding a Bayesian credible interval is a natural byproduct of our sampling. Once we use methods like MCMC to draw thousands of representative samples from the posterior distribution $p(\theta|D)$, we simply sort our drawn samples from smallest to largest. To find the 95% credible interval, we look at the values at the 2.5th percentile and the 97.5th percentile. The range between these two numbers contains exactly 95% of the posterior probability mass.</p>
 </li>
 </ul>
 </div>
@@ -7584,17 +7541,17 @@ $$\hat{\theta}_{MLE} = \arg\max_\theta \mathcal{L}(\theta)$$<p>Because observati
 <h3 id="3.1-Bayes'-Theorem">3.1 Bayes' Theorem<a class="anchor-link" href="#3.1-Bayes'-Theorem">¶</a></h3><p>Suppose we have data $D$ and a model with parameters $\theta$. Bayesian inference treats $\theta$ as a random variable and updates our belief about it using Bayes' theorem:</p>
 $$p(\theta | D) = \frac{p(D | \theta) p(\theta)}{p(D)}$$<p>Where:</p>
 <ul>
-<li><p>$p(\theta)$ is the Prior (what we know before seeing data).</p>
+<li><p>$p(\theta)$ is the <strong>Prior</strong> (what we know before seeing data).</p>
 </li>
-<li><p>$p(D | \theta)$ is the Likelihood (how probable the data is given $\theta$).</p>
+<li><p>$p(D | \theta)$ is the <strong>Likelihood</strong> (how probable the data is given $\theta$).</p>
 </li>
-<li><p>$p(\theta | D)$ is the Posterior (updated belief).</p>
+<li><p>$p(\theta | D)$ is the <strong>Posterior</strong> (updated belief).</p>
 </li>
-<li><p>$p(D)$ is the Marginal Likelihood or Evidence.</p>
+<li><p>$p(D)$ is the <strong>Marginal Likelihood</strong> or <strong>Evidence</strong>.</p>
 </li>
 </ul>
 <h3 id="3.2-The-Denominator-Problem">3.2 The Denominator Problem<a class="anchor-link" href="#3.2-The-Denominator-Problem">¶</a></h3><p>To use the posterior to make predictions (e.g., the expected value of a parameter $\mathbb{E}[\theta|D]$), we must evaluate:</p>
-$$\mathbb{E}[\theta | D] = \int \theta \, p(\theta | D) d\theta = \frac{\int \theta \, p(D | \theta) p(\theta) d\theta}{\int p(D | \theta) p(\theta) d\theta}$$<p>The denominator, $p(D) = \int p(D | \theta) p(\theta) d\theta$, known as the Bayesian evidence (or marginal likelihood), is a massive, high-dimensional integral. For almost all interesting, non-conjugate models (like neural networks or hierarchical models), this Bayesian evidence is analytically intractable. We know the posterior up to a constant of proportionality:</p>
+$$\mathbb{E}[\theta | D] = \int \theta \, p(\theta | D) d\theta = \frac{\int \theta \, p(D | \theta) p(\theta) d\theta}{\int p(D | \theta) p(\theta) d\theta}$$<p>The denominator, $p(D) = \int p(D | \theta) p(\theta) d\theta$, known as the <strong>Bayesian evidence</strong> (or marginal likelihood), is a massive, high-dimensional integral. For almost all interesting, non-conjugate models (like neural networks or hierarchical models), this Bayesian evidence is analytically intractable. We know the posterior up to a constant of proportionality:</p>
 $$p(\theta | D) \propto p(D | \theta) p(\theta)$$<p>We define this unnormalized target distribution as $\pi(\theta) = p(D | \theta) p(\theta)$. Standard Monte Carlo fails here because we cannot directly sample from a distribution if we don't know its normalizing constant. We need a way to sample from $p(\theta | D)$ using only $\pi(\theta)$.</p>
 <h3 id="3.3-When-to-use-Bayesian-Inference:">3.3 When to use Bayesian Inference:<a class="anchor-link" href="#3.3-When-to-use-Bayesian-Inference:">¶</a></h3><ul>
 <li><p>When you want to incorporate prior knowledge into your modeling.</p>
@@ -7619,7 +7576,7 @@ $$p(\theta | D) \propto p(D | \theta) p(\theta)$$<p>We define this unnormalized 
 <p>Mathematically, for a discrete state space:</p>
 $$P(X_{t+1} = x_{t+1} | X_t = x_t, X_{t-1} = x_{t-1}, \dots, X_0 = x_0) = P(X_{t+1} = x_{t+1} | X_t = x_t)$$<p><strong>Transition Matrices and Kernels:</strong>
 For a finite state space, the dynamics are governed by a transition matrix $P$, where each element $P_{ij}$ represents the probability of transitioning from state $i$ to state $j$:</p>
-$$P_{ij} = P(X_{t+1} = j | X_t = i)$$<p>Because the chain must go somewhere, the rows of $P$ must sum to 1 ($\sum_j P_{ij} = 1$). For continuous spaces, $P$ is replaced by a transition kernel $P(x \to x')$.</p>
+$$P_{ij} = P(X_{t+1} = j | X_t = i)$$<p>Because the chain must go somewhere, the rows of $P$ must sum to 1 ($\sum_j P_{ij} = 1$). For continuous spaces, $P$ is replaced by a transition kernel $P(x \to x')$, and so the above summation becomes $\int P(x\to x') dx' = 1$..</p>
 <p><strong>Chapman-Kolmogorov Equations:</strong>
 The probability of going from state $i$ to state $j$ in $n$ steps is given by the $n$-th power of the transition matrix, denoted $P^{(n)} = P^n$. The Chapman-Kolmogorov equation relates these multi-step transitions:</p>
 $$P^{(m+n)}_{ij} = \sum_{k \in \mathcal{S}} P^{(m)}_{ik} P^{(n)}_{kj}$$<p><strong>Stationary Distribution:</strong>
@@ -8082,10 +8039,6 @@ $$\mathbb{E}[\theta|D] \approx \frac{1}{N} \sum_{i=1}^N \theta_i$$<p>Similarly, 
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="8.-Hypothesis-Testing">8. Hypothesis Testing<a class="anchor-link" href="#8.-Hypothesis-Testing">¶</a></h2><p>Once we have posteriors (perhaps via MCMC), how do we make scientific decisions? We test hypotheses.</p>
-<h3 id="8.1-The-Frequentist-Paradigm-(Brief-Overview)">8.1 The Frequentist Paradigm (Brief Overview)<a class="anchor-link" href="#8.1-The-Frequentist-Paradigm-(Brief-Overview)">¶</a></h3><p>In frequentist statistics, we define a Null Hypothesis $H_0$. We calculate a test statistic $T$ from the data $D$.
-The $p$-value is defined as $P(T \geq T_{obs} | H_0)$.
-If the $p$-value $&lt; \alpha$ (usually 0.05), we reject $H_0$.</p>
-<p><em>However</em>, the $p$-value tells us $P(Data | H_0)$. It does not tell us $P(H_0 | Data)$, which is usually what we actually want to know.</p>
 </div>
 </div>
 </div>
@@ -8148,7 +8101,7 @@ $$\boxed{\log K \approx -\frac{1}{2} \text{BIC}_1 - \left( -\frac{1}{2} \text{BI
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="8.3-Optional">8.3 Optional<a class="anchor-link" href="#8.3-Optional">¶</a></h3><p><strong>Derivation: From Laplace Approximation to BIC</strong></p>
+<h4 id="9.2.1-Optional">9.2.1 Optional<a class="anchor-link" href="#9.2.1-Optional">¶</a></h4><p><strong>Derivation: From Laplace Approximation to BIC</strong></p>
 <p>We wish to approximate $\log P(D) = \log \int P(D|\theta) P(\theta) d\theta$.
 Let $h(\theta) = \log P(D|\theta) + \log P(\theta)$. The integral is $\int e^{h(\theta)} d\theta$.
 We Taylor expand $h(\theta)$ around the Maximum a Posteriori (MAP) estimate $\hat{\theta}$:</p>
@@ -8172,22 +8125,6 @@ $$\log P(D) \approx \log P(D|\hat{\theta}) + \log P(\hat{\theta}) + \frac{k}{2} 
 <p>Substituting these approximations back:</p>
 $$\log P(D) \approx \log P(D|\hat{\theta}_{MLE}) - \frac{k}{2} \log N$$<p>Multiplying by $-2$ (historical convention from deviance) gives the standard BIC formula:</p>
 $$\text{BIC} \approx -2 \log P(D) = -2 \log P(D|\hat{\theta}_{MLE}) + k \log N$$<p>$\blacksquare$</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a4f68478">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="8.4-When-to-use-Model-Selection-Criteria-(BIC/AIC):">8.4 When to use Model Selection Criteria (BIC/AIC):<a class="anchor-link" href="#8.4-When-to-use-Model-Selection-Criteria-(BIC/AIC):">¶</a></h3><ul>
-<li><p>When you need a quick, computationally cheap way to compare models without running full MCMC to calculate marginal likelihoods.</p>
-</li>
-<li><p><strong>AIC vs BIC</strong>: Use <strong>BIC</strong> when you believe the "true model" is in your candidate set and you want to find it (consistent for model identification, penalizes complexity heavily with $k \log N$). Use <strong>AIC</strong> (Akaike Information Criterion, penalty is $2k$) when you care more about predictive performance and don't necessarily believe any model is exactly "true".</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
